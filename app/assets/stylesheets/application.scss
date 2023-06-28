@@ -1,0 +1,151 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ */
+header{
+  height: 7%;
+  .logos{
+    display:flex;
+    flex-direction:row;
+    justify-content:space-between;
+    margin:0 15%;
+  }
+  .headlist{
+    ul{
+      display:flex;
+      flex-direction:row;
+      margin:20px 15%;
+      height:40px;
+      padding:0;
+    }
+    li{
+      list-style : none;
+      height:100%;
+      width:100%;
+      text-align: center;
+      display: inline-block;
+      border-bottom: 1px solid orange;
+    }
+    a{
+      width:100%;
+      height:100%;
+      text-decoration: none;
+      display:block;
+      line-height:300%;
+    }
+  }
+}
+
+
+
+.toppage{
+  background-image: image-url('top_bgimg.jpg');
+  height:446px;
+  width:782px;
+  background-size: cover;
+  margin-left: auto;
+  margin-right: auto;
+  display:flex;
+  flex-direction:row;
+  justify-content:space-around;
+  align-items: flex-end;
+  a{
+    color:white;
+  }
+}
+
+.posts{
+  margin:0 15%;
+  .threads{
+    a{
+    color:blue;
+  }
+  }
+  li{
+    list-style : none;
+    font-size:0.8em;
+  }
+  ul{
+    border-bottom:1px solid gray;
+  }
+  .name{
+    font-size:1.2em;
+  }
+}
+
+.newpost{
+  margin:0 15%;
+}
+
+.responses{
+  margin:0 15%;
+  .res_in_post{
+    border:1px solid orange; 
+    padding:1em;
+  }
+  .res_in_res{
+    border:1px solid orange; 
+    padding:1em;
+  }
+}
+
+
+#map{
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.maplink{
+  margin-left:15%;
+}
+
+
+.mypage{
+  margin:0 15%;
+}
+
+footer{
+  margin-top:5em;
+  text-align: center;
+  height:6em;
+  .text{
+    padding:1em 0;
+  }
+}
+
+
+
+
+// ボタンのcss
+.btn02 {
+  display: inline-block;
+  padding: 16px 32px;
+  background: orange;
+  border-radius: 4px;
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 18px;
+  font-weight: bold;
+  line-heigt: 1.2em;
+  -webkit-box-shadow: 0px 6px 3px -3px rgba(0,0,0,0.4);
+  box-shadow: 0px 6px 3px -3px rgba(0,0,0,0.4);
+  -webkit-transition: .12s;
+  transition: .12s;
+}
+.btn02:hover {
+  background: #ffffff;
+  border: solid 2px orange;
+  color: orange;
+  opacity: 0.8;
+}

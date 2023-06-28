@@ -1,0 +1,74 @@
+<%= form_with(model: response, local: true) do |form| %>
+  <% if response.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(response.errors.count, "error") %> prohibited this response from being saved:</h2>
+
+      <ul>
+      <% response.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label "施設・店・地名" %>
+    <%= form.text_field :name, id: :response_name %>
+  </div>
+
+  <div class="field">
+    <% if response.post_id.nil? %>
+    <!--<%= form.label :post_id %>-->
+    <!--<%= form.text_field :post_id, id: :response_post_id %>-->
+      <%= form.hidden_field :post_id, :value =>params[:id] %>
+    <% end %>
+  </div>
+
+  <div class="field">
+    <!--<%= form.label :ba %>-->
+    <!--<%= form.check_box :ba, id: :response_ba %>-->
+    <%= form.hidden_field :ba, :value =>false %>
+  </div>
+
+  <div class="field">
+    <%= form.label "住所" %>
+    <%= form.text_field :address, id: :response_address %>
+  </div>
+
+  <div class="field">
+    <%= form.label "ジャンル" %>
+    <!--<%= form.text_field :genre, id: :response_genre %>-->
+    <%= form.select :genre, ['全般','観光', '食事','土産','宿泊','その他'], {include_blank: '答えのジャンルを選択してください'} %>
+  </div>
+
+  <div class="field">
+    <%= form.label "タグ" %>
+    <%= form.select :genre, ['家族向け', '大人向け','一人でも楽しめる','友達向け','カップル向け','その他'], {include_blank: '答えのタグを選択してください'} %>
+  </div>
+
+  <!--<div class="field">-->
+  <!--  <%= form.label "概要" %>-->
+  <!--  <%= form.text_field :summary, id: :response_summary %>-->
+  <!--</div>-->
+
+  <div class="field">
+    <%= form.label "内容" %>
+    <%= form.text_area :content, id: :response_content %>
+  </div>
+  
+  <div class="field">
+    <%= form.label "画像" %>
+    <%= form.file_field :img, id: :img %>
+  </div>
+  
+  <% if user_signed_in? %>
+    <div class="field">
+      <!--<%= form.label :user_id %>-->
+      <%= form.hidden_field :user_id, :value => current_user.id %>
+    </div>
+  <% end %>
+  
+  <div class="actions">
+    <%= form.submit "回答する" %>
+  </div>
+<% end %>

@@ -1,0 +1,72 @@
+<% provide(:title, "質問詳細") %>
+<div class="responses">
+  <div class="res_in_post">
+  <div>
+    <% if @post.user_id? %>
+      <span style="font-size:1.3em;"><%= User.find_by(id: @post.user_id).username %>さん</span>   <%= @post.created_at %>
+    <% else %>
+      匿名投稿   <%= @post.created_at %>
+    <% end %>
+  </div>
+  <div><%= @post.name %>  <span style="font-size:0.8em;"><%= @post.local %>  <%= @post.genre %></span></div>
+  <br>
+  <div style="font-size:1.2em;"><%= @post.content %></div>
+</div>
+
+<br>
+
+<div>
+  <% @responses.each do |response| %>
+  <div class="res_in_res">
+    <% if response.ba %>
+      ベストアンサー
+    <% end %>
+    <div style="font-size:1.3em;">
+      <% if response.user_id? %>
+        <%= User.find_by(id: response.user_id).username %>さん
+      <% else %>
+        ゲスト
+      <% end %>
+    </div>
+    <div><%= response.name %>  <span style="font-size:0.8em;"><%= response.genre %><%= response.tag %></span></div>
+    <br>
+    <div style="font-size:1.2em;"><%= response.content %></div>
+    <br>
+    <div>
+      <% if response.img? %>
+        <%= image_tag response.img.url , :width => '100', :height => '100'%>
+      <% end %>
+    </div>
+    <div>
+      <%= link_to "場所を地図で確認する", maps_index_path(:lat => response.latitude, :lon => response.longitude, :id => response.id ), data: {"turbolinks" => false} %>
+    </div>
+        <!--<td><%= link_to 'Show', response %></td>-->
+    <div>
+      <% if user_signed_in? %>
+        <%= link_to 'マイマップに追加する', "/responses/mymap/#{response.id}", method: :mymap %>
+        <% if Post.find(response.post_id).state == false %>
+          <% if response.user_id == current_user.id %>
+            <%= link_to '編集', "/responses/#{response.id}/edit" %>
+            <%= link_to '削除', response, method: :delete, data: { confirm: 'Are you sure?' } %>
+          <% end %>
+          <% if Post.find_by(id: response.post_id).user_id == current_user.id %>
+            <%= button_to 'ベストアンサーに選ぶ', response, {:method => :ba}%>
+          <% end %>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+  <% end %>
+</div>
+
+<br>
+<% if !Post.find_by(id: params[:id]).state %>
+  <h1>回答作成</h1>
+
+  <%= render 'form', response: @response %>
+<% end %>
+
+
+<%= link_to '質問一覧', posts_path %>
+
+</div>

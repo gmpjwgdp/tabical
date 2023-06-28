@@ -1,0 +1,78 @@
+<% provide(:title, "マイページ") %>
+<head>
+<style>
+/* マップを表示する div 要素の高さを必ず明示的に指定します。 */
+#map {
+  height: 600px;
+  width: 1000px;
+}
+</style>
+</head>
+<div class="mypage">
+  <h1>マイページ</h1>
+<h2>ユーザー情報</h2>
+<% if user_signed_in? %>
+  <div><%= current_user.username %>さん</div>
+  <div><%= current_user.email %></div>
+  <hr>
+  <h2><%= @posts.count %>個の質問</h2>
+<h3>解決済み</h3>
+<%= render "posts_solved" %>
+<h3>未解決</h3>
+<%= render "posts_unsolved" %>
+<hr>
+<h2><%= @responses.count %>個の回答</h2>
+<%= render "posts_responsed" %>
+<% else %>
+  ゲスト
+<% end %>
+<hr>
+<h2>通知</h2>
+<% @notifications.each do |n| %>
+  <%= n.created_at %>
+  <%= n.contributor_id %>さんの投稿
+  <%= n.content %>
+  <%= link_to('リンク',"/posts/#{n.post_id}/responses/index") %>
+  <br>
+<% end %>
+<hr>
+<h2>マイマップ</h2>
+<div id="map"></div><!-- 地図を表示する div 要素（id="map"）-->
+<script>
+  let map
+  function initMap(){
+    geocoder = new google.maps.Geocoder()
+      map = new google.maps.Map(document.getElementById('map'), {
+        center: {lat: 38.258595, lng:137.6850225},
+        zoom: 5.5,
+      });
+    <% @mymaps.each do |place| %>
+      <% @mymap = Response.find_by(id: place.response_id) %>
+      <% if @mymap.latitude and @mymap.longitude %>
+          (function(){
+            var contentString = "<%= @mymap.name %>"; 
+            var url = "/posts/<%= @mymap.post_id%>/responses/index";
+            var infowindow = new google.maps.InfoWindow({
+                content: contentString
+            });
+    
+            var marker = new google.maps.Marker({
+                position:{lat: <%= @mymap.latitude %>, lng: <%= @mymap.longitude %>},
+                map: map,
+                title: contentString
+            });
+            marker.addListener('click', function() {
+              window.location.href = url;
+            });
+          })();
+      <% end %>
+    <% end %>
+  }
+</script> 
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCsi0s0NuSLT92tl6JQD-Qq0NNbpKxQDHc&callback=initMap" async defer></script>
+<div><%= link_to "質問一覧","/posts"%></div>
+<div><%= link_to "ヘルプ","/help"%></div>
+<%= link_to "サインアウト", destroy_user_session_path, method: :delete %>
+<div><%= link_to "マップ","/maps/index"%></div>
+<%= link_to 'トップページ', root_path %>
+</div>

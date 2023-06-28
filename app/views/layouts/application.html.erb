@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= full_title(yield(:title)) %></title>
+    <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+    <p class="notice"><%= notice %></p>
+    <p class="alert"><%= alert %></p>
+    <header>
+      <div class="logos">
+        <%= image_tag 'logo.png' ,:height => '50' %>
+        <% if user_signed_in? %>
+          <div><%= link_to "#{current_user.username}(#{Notification.where(target_id: current_user.id).where(state: "f").count})" , {controller: :mypages, action: :show} , data: {"turbolinks" => false}%></div>
+          <div><%= link_to "ログアウト", destroy_user_session_path, method: :delete %></div>
+        <% else %>
+          <div>IDでもっと便利に<%= link_to "新規取得","/users/sign_up"%></div>
+          <div><%= link_to "ログイン","/users/sign_in"%></div>
+        <% end %>
+      </div>
+      <div class="headlist">
+        <ul>
+          <li><%= link_to 'トップページ', root_path %></li>
+          <li><%= link_to "Q&A一覧",posts_path%></li>
+          <li><%= link_to "マップ","/maps/index" , data: {"turbolinks" => false}%></li>
+          
+        </ul>
+      </div>
+    </header>
+    <main>
+      <%= yield %>
+    </main>
+    <footer>
+      <hr>
+      <div class="text">
+        <div><%= link_to "ヘルプ・お問い合わせ","/help"%></div>
+        <div>Copyright (C) 2020 hoge. All Rights Reserved.</div>
+      </div>
+    </footer>
+  </body>
+</html>

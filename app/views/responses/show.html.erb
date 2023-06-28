@@ -1,0 +1,54 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @response.name %>
+</p>
+
+<p>
+  <strong>Post:</strong>
+  <%= @response.post %>
+</p>
+
+<p>
+  <strong>Ba:</strong>
+  <%= @response.ba %>
+</p>
+
+<p>
+  <strong>Address:</strong>
+  <%= @response.address %>
+</p>
+
+<p>
+  <strong>Lat:</strong>
+  <%= @response.lat %>
+</p>
+
+<p>
+  <strong>Lon:</strong>
+  <%= @response.lon %>
+</p>
+
+<p>
+  <strong>Genre:</strong>
+  <%= @response.genre %>
+</p>
+
+<p>
+  <strong>Tag:</strong>
+  <%= @response.tag %>
+</p>
+
+<p>
+  <strong>Summary:</strong>
+  <%= @response.summary %>
+</p>
+
+<p>
+  <strong>Content:</strong>
+  <%= @response.content %>
+</p>
+
+<%= link_to 'Edit', edit_response_path(@response) %> |
+<%= link_to 'Back', responses_path %>
